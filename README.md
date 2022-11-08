@@ -4,7 +4,7 @@
 
 # Beskrivelse
 Denne opgave er baseret på en fil med resultaterne fra de første 22 runder af den danske superliga fra 2020-2021. 
-Navnet på din inputfil skal være [kampe-2020-2021.txt](src/kampe-2020-2021.txt). 
+Navnet på din inputfil skal være [kampe-2020-2021.txt](cmake-build-debug/src/kampe-2020-2021.txt). 
 Hver linje i filen er et kampresultat, eksempelvis
 
 ```
