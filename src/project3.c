@@ -19,6 +19,7 @@ typedef struct {
     int points;
     int goals_out;
     int goals_in;
+    int goal_dif;
 } teams;
 
 
@@ -31,21 +32,23 @@ void snyder(gamesPlayed *games_array, teams *teams_array);
 void reset_team_array(teams *teams_array);
 
 void print_teams_array(teams *array, int games);
+int team_array_sort_logic(const void *a, const void *b);
+void sort_team_array(teams *array);
 
 int main(void) {
     gamesPlayed games_array[132];
-    teams teams_array[12] = {{"FCK", 0, 0, 0},
-                             {"SDR", 0, 0, 0},
-                             {"ACH", 0, 0, 0},
-                             {"AaB", 0, 0, 0},
-                             {"LBK", 0, 0, 0},
-                             {"RFC", 0, 0, 0},
-                             {"BIF", 0, 0, 0},
-                             {"FCM", 0, 0, 0},
-                             {"AGF", 0, 0, 0},
-                             {"LBK", 0, 0, 0},
-                             {"FCN", 0, 0, 0},
-                             {"OB", 0, 0, 0},};
+    teams teams_array[12] = {{"FCK", 0, 0, 0,0},
+                             {"SDR", 0, 0, 0,0},
+                             {"ACH", 0, 0, 0,0},
+                             {"AaB", 0, 0, 0,0},
+                             {"LBK", 0, 0, 0,0},
+                             {"RFC", 0, 0, 0,0},
+                             {"BIF", 0, 0, 0,0},
+                             {"FCM", 0, 0, 0,0},
+                             {"AGF", 0, 0, 0,0},
+                             {"VB", 0, 0, 0,0},
+                             {"FCN", 0, 0, 0,0},
+                             {"OB", 0, 0, 0,0},};
 
     FILE *games_played = fopen("kampe-2020-2021.txt", "r");
     if (games_played == NULL) {
@@ -58,6 +61,9 @@ int main(void) {
     reset_team_array(teams_array);
     print_teams_array(teams_array, 12);
     snyder(games_array, teams_array);
+    print_teams_array(teams_array, 12);
+    sort_team_array(teams_array);
+    printf("___________________________________\n");
     print_teams_array(teams_array, 12);
 
     return 0;
@@ -83,8 +89,9 @@ void print_games_array(gamesPlayed *array, int games) {
 }
 
 void print_teams_array(teams *array, int games) {
+    printf(" Team    Points   Score\n");
     for (int i = 0; i < games; ++i) {
-        printf("%s %d %d %d\n", array[i].name, array[i].goals_out, array[i].goals_in, array[i].points);
+        printf("| %3s %5d %8d - %d | %d\n", array[i].name, array[i].points, array[i].goals_out, array[i].goals_in,array[i].goal_dif);
     }
 
 }
@@ -126,8 +133,8 @@ void snyder(gamesPlayed *games_array, teams *teams_array) {
                     teams_array[i].points += 3;
                 }
             }
-
         }
+        teams_array[i].goal_dif = teams_array[i].goals_out - teams_array[i].goals_in;
     }
 }
 
@@ -138,4 +145,17 @@ void sort_team_array(teams *array){
 int team_array_sort_logic(const void *a, const void *b){
     teams *teamA = (teams *)a;
     teams *teamB = (teams *)b;
+
+    if(teamA->points>teamB->points)
+        return -1;
+    if(teamB->points> teamA->points)
+        return 1;
+    if(teamA->points == teamB->points) {
+        if (teamA->goal_dif > teamB->goal_dif)
+            return -1;
+        if (teamB->goal_dif > teamA->goal_dif)
+            return 1;
+    }
+    return 0;
+
 }
