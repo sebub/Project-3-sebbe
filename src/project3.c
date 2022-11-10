@@ -91,7 +91,7 @@ void print_games_array(gamesPlayed *array, int games) {
 void print_teams_array(teams *array, int games) {
     printf(" Team    Points   Score\n");
     for (int i = 0; i < games; ++i) {
-        printf("| %3s %5d %8d - %d | %d\n", array[i].name, array[i].points, array[i].goals_out, array[i].goals_in,array[i].goal_dif);
+        printf("| %3s %5d %8d - %d |\n", array[i].name, array[i].points, array[i].goals_out, array[i].goals_in,array[i].goal_dif);
     }
 
 }
@@ -157,5 +157,4 @@ int team_array_sort_logic(const void *a, const void *b){
             return 1;
     }
     return 0;
-
 }
