@@ -27,7 +27,7 @@ void fill_games_array(FILE *file, gamesPlayed *array, int games);
 
 void print_games_array(gamesPlayed *array, int games);
 
-void snyder(gamesPlayed *games_array, teams *teams_array);
+void fill_teams_array(gamesPlayed *games_array, teams *teams_array);
 
 void reset_team_array(teams *teams_array);
 
@@ -60,12 +60,13 @@ int main(void) {
     }
 
     fill_games_array(games_played, games_array, 132);
-    //print_games_array(games_array, 132);
 
     reset_team_array(teams_array);
     print_teams_array(teams_array, 12);
-    snyder(games_array, teams_array);
+
+    fill_teams_array(games_array, teams_array);
     print_teams_array(teams_array, 12);
+
     sort_team_array(teams_array);
     printf("___________________________________\n");
     print_teams_array(teams_array, 12);
@@ -108,7 +109,7 @@ void reset_team_array(teams *teams_array) {
     }
 }
 
-void snyder(gamesPlayed *games_array, teams *teams_array) {
+void fill_teams_array(gamesPlayed *games_array, teams *teams_array) {
     for (int j = 0; j < 132; ++j) {
 
         teams_array[nedern_h(games_array[j].team1)].goals_out += games_array[j].scoreteam1;
@@ -131,7 +132,6 @@ void snyder(gamesPlayed *games_array, teams *teams_array) {
         teams_array[i].goal_dif = teams_array[i].goals_out - teams_array[i].goals_in;
     }
 }
-
 
 void sort_team_array(teams *array) {
     qsort(array, 12, sizeof(teams), team_array_sort_logic);
